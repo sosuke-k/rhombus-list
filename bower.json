@@ -1,0 +1,25 @@
+{
+  "name": "rhombus-list",
+  "version": "0.1.0",
+  "authors": [
+    "sosuke-k"
+  ],
+  "description": "The list of rhombus",
+  "keywords": [
+    "Polymer",
+    "web-components",
+    "rhombus"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sosuke-k/rhombus-list",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "main": [
+    "rhombus-list.html"
+  ],
+  "ignore": [
+    "**/.*"
+  ]
+}

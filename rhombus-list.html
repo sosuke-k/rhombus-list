@@ -1,0 +1,160 @@
+<!--
+  `rhombus-list` is an list of rhombus with text and link inside each.
+
+  ```
+    <rhombus-list side="100" border="2" num="3" data="{{array}}"></rhombus-list>
+  ```
+
+  See [`demo`](./demo.html) for now.
+
+@group Custom Elements
+@element rhombus-list
+@homepage http://sosuke-k.github.io/rhombus-list
+-->
+
+<polymer-element name="rhombus-list" attributes="side border num data">
+  <template>
+    <style>
+      :host {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      #container {
+        width: {{width}}px;
+        margin: 0 auto;
+      }
+      .rhombus {
+        width: {{width}}px;
+        margin: -{{ marginContainerTop }}px 0 0 -{{ marginContainerLeft }}px;
+        padding: 0;
+        text-align: center;
+        list-style-type: none;
+      }
+      .rhombus li {
+        float: left;
+        margin: {{ marginDiff }}px 0 0 {{ marginDiff }}px;
+        padding: 0;
+      }
+      .parts {
+        width: {{ side }}px;
+        height: {{ side }}px;
+        background: transparent;
+        color: #FFF;
+        display: block;
+        overflow: hidden;
+        border: {{ border }}px solid #FFF;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+      .parts span {
+        display:table-cell;
+        vertical-align: middle;
+        width: {{ side }}px;
+        height: {{ side }}px;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+      }
+      .parts:hover {
+        background-color: gray;
+        -webkit-transition: all .35s linear;
+        -moz-transition: all .35s linear;
+        -ms-transition: all .35s linear;
+        -o-transition: all .35s linear;
+        transition: all .35s linear;
+      }
+      a {
+        text-decoration: none;
+      }
+      li:nth-child({{num + 1 + 1}}){
+        margin-left: {{ evenMarginLeft }}px;
+      }
+      li:nth-child(n+{{num + 1 + 1}}){
+        margin-top: {{ evenMarginTop }}px;
+      }
+      li:nth-child(n+{{num + 2 + 1}}){
+        margin-left:{{ marginDiff }}px;
+      }
+      li:nth-child({{ num + nPerEvenLine }}n+{{ num + 1 + 1}}){
+        margin-left: {{ evenMarginLeft }}px;
+      }
+      li:nth-child({{ num + nPerEvenLine }}n+{{ num + nPerEvenLine + 1 + 1}}){
+        margin-left: {{ marginDiff }}px;
+      }
+    </style>
+    <div id="container">
+      <ul class="rhombus">
+        <template repeat="{{model in data}}">
+          <li>
+            <a href="{{model.url}}" class="parts">
+              <span>{{model.text}}</span>
+            </a>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </template>
+  <script>
+    Polymer("rhombus-list", {
+
+      /**
+       * The length of rhombus side.
+       *
+       * @attribute side
+       * @type number
+       * @default 120
+       */
+      side: 120,
+
+      /**
+       * The width of rhombus border.
+       *
+       * @attribute border
+       * @type number
+       * @default 3
+       */
+      border: 3,
+
+      /**
+       * The number of rhombus per odd line.
+       *
+       * @attribute num
+       * @type number
+       * @default 4
+       */
+      num: 4,
+
+      /**
+       * The array of text and url of rhombus.
+       *
+       * @attribute data
+       * @type array
+       * @default []
+       */
+      data: [],
+
+      ready: function () {
+        var sqrt2 = Math.sqrt(2);
+        this.nPerEvenLine = this.num - 1;
+        
+        this.marginDiff = (this.side + 2 * this.border) * (sqrt2 - 1) - this.border * sqrt2;
+        this.marginContainerTop = (this.side + 2 * this.border) * (sqrt2 - 1) / 2 - this.border * sqrt2;
+        this.marginContainerLeft = this.marginContainerTop;
+        this.evenMarginTop = this.marginDiff - (this.side + this.border) * sqrt2 / 2;
+        this.evenMarginLeft = this.marginDiff + (this.side + this.border) * sqrt2 / 2;
+
+        this.width = this.num * (this.side + 2 * this.border) * sqrt2;
+
+      }
+    });
+  </script>
+</polymer-element>
