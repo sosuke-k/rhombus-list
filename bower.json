@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/sosuke-k/rhombus-list",
-  "private": true,
+  "private": false,
   "dependencies": {
     "polymer": "Polymer/polymer#master"
   },
